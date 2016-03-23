@@ -1,0 +1,11 @@
+{
+    "name": "Attend/alpha",
+    "require": {
+        "slim/slim": "2.*",
+        "slim/views": "dev-master",
+        "twig/twig": "1.*"
+    },
+    "autoload": {
+        "psr-4": { "JV\\" : "src/" }
+    }
+}
