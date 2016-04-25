@@ -38,20 +38,10 @@ $app->view->parserOptions = array(
 );
 
 // give Twig templates access to global variables, dump() function, Slim View Extras, Markdown
-
-
 $twig = $app->view->getEnvironment();
 $twig->addGlobal('base_url', BASE_URL);
 $twig->addGlobal('session', $_SESSION);
 $twig->addExtension(new \Twig_Extension_Debug());
-
-use Aptoma\Twig\Extension\MarkdownExtension;
-use Aptoma\Twig\Extension\MarkdownEngine;
-
-$engine = new MarkdownEngine\MichelfMarkdownEngine();
-
-$twig->addExtension(new MarkdownExtension($engine));
-
 
 // Model services
 $app->cardsService = new \JV\CardsService();

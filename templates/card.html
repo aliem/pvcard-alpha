@@ -5,10 +5,6 @@
 {% block main %}
 
 <div class="markdown">
-{% markdown %}
-
-  {{ data.markdown }}
-
-{% endmarkdown %}
+{{ data.card.html | raw }}
 </div>
 {% endblock %}
