@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+
+{% block title %}{{ data.card.title }}{% endblock %}
+
+{% block main %}
+
+{% markdown %}
+  {{ data.markdown }}
+{% endmarkdown %}
+
+{% endblock %}

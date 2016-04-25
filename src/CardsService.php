@@ -9,7 +9,7 @@ class CardsService
   {
     try {
       $json = file_get_contents(dirname(__FILE__) . '/cards.json');
-      $this->data = json_decode($json);
+      $this->data = json_decode($json, TRUE);
       if (!$this->data) {
         die('Empty JSON');
       }
@@ -22,23 +22,23 @@ class CardsService
 
   public function getSections()
   {
-    return $this->data->sections;
+    return (array) $this->data['sections'];
   }
 
   public function getSection($section_slug)
   {
-    $d = $this->data->sections->$section_slug;
+    $d = $this->data['sections'][$section_slug];
     return ($d ? $d : 'No such section');
   }
 
   public function getCards()
   {
-    return $this->data->cards;
+    return $this->data['cards'];
   }
 
   public function getCard($card_slug)
   {
-    $d = $this->data->cards->$card_slug;
+    $d = $this->data['cards'][$card_slug];
     return ($d ? $d : 'No such card');
   }
 
@@ -51,7 +51,7 @@ class CardsService
       return 'Error: please enter at least 3 characters';
     }
 
-    foreach ($this->data->cards as $card) {
+    foreach ($this->data['cards'] as $card) {
       $pattern = '/('.$term.')/i';
       preg_match_all($pattern, $card->title, $matches);
       if (count($matches[0]) > 0) {
@@ -68,7 +68,7 @@ class CardsService
     if (count($title_results) == 0 || count($body_results) == 0) {
       return 'Error: no results found';
     }
-    
+
     return array('title_results' => $title_results, 'body_results' => $body_results);
   }
 

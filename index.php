@@ -37,11 +37,21 @@ $app->view->parserOptions = array(
     'debug' => true
 );
 
-// give Twig templates access to global variables, dump() function, Slim View Extras
+// give Twig templates access to global variables, dump() function, Slim View Extras, Markdown
+
+
 $twig = $app->view->getEnvironment();
 $twig->addGlobal('base_url', BASE_URL);
 $twig->addGlobal('session', $_SESSION);
 $twig->addExtension(new \Twig_Extension_Debug());
+
+use Aptoma\Twig\Extension\MarkdownExtension;
+use Aptoma\Twig\Extension\MarkdownEngine;
+
+$engine = new MarkdownEngine\MichelfMarkdownEngine();
+
+$twig->addExtension(new MarkdownExtension($engine));
+
 
 // Model services
 $app->cardsService = new \JV\CardsService();
@@ -59,10 +69,49 @@ $app->cardsService = new \JV\CardsService();
 
 // HOME
 $app->get('/', function() use($app) {
+  $sections = $app->cardsService->getSections();
+  $data = array(
+    'sections' => $sections
+  );
+  $app->render('_base.html', array('data' => $data));
 
-  $cards = $app->cardsService->searchCards('acs');
-  echo "<pre>";
-  print_r($cards);
+});
+
+$app->get('/section', function() use($app) {
+
+  $sections = $app->cardsService->getSections();
+  $data = array(
+    'sections' => $sections
+  );
+
+  $app->render('section.html', array('data' => $data));
+
+});
+
+$app->get('/section/:slug', function($slug) use($app) {
+
+  $sections = $app->cardsService->getSections();
+  $section = $app->cardsService->getSection($slug);
+  $data = array(
+    'sections' => $sections,
+    'section' => $section
+  );
+
+  $app->render('section.html', array('data' => $data));
+
+});
+
+$app->get('/card/:slug', function($slug) use($app) {
+
+  $sections = $app->cardsService->getSections();
+  $card = $app->cardsService->getCard($slug);
+  $data = array(
+    'sections' => $sections,
+    'card' => $card,
+    'markdown' => $card['markdown']
+  );
+
+  $app->render('card.html', array('data' => $data));
 
 });
 

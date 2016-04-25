@@ -1,0 +1,23 @@
+{
+  "name": "pvcard-alpha",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "materialize-css": "^0.97.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvoros/pvcard-alpha.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jvoros/pvcard-alpha/issues"
+  },
+  "homepage": "https://github.com/jvoros/pvcard-alpha#readme"
+}

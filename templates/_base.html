@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+     <!--Import Google Icon Font-->
+     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
+
+     <!--Let browser know website is optimized for mobile-->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <style>
+
+    header, main, footer {
+      padding-left: 240px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+
+      .nav-wrapper {
+        text-align: center;
+      }
+    }
+
+    .page-title {
+      font-size: 48px;
+      
+
+      -webkit-font-smoothing:antialiased;
+    }
+
+    #hamburger {
+      position: absolute;
+      top: 0;
+      line-height: 56px;
+      color: white;
+      font-size: 48px;
+    }
+
+    ul.side-nav.fixed {
+      overflow: hidden;
+    }
+
+    ul.side-nav.fixed:hover {
+      overflow: scroll;
+    }
+
+  </style>
+
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a class="page-title">{% block title%} {% endblock %}</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="#" data-activates="main-nav" id="hamburger" class="button-collapse hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
+
+      <ul id="main-nav" class="side-nav fixed">
+        <li><h1>ALIEM Cards</h1></li>
+        {% for key,section in data.sections %}
+        <li><b><a href="/section/{{ key }}">{{ section.title }}</a></b></li>
+        {% endfor %}
+      </ul>
+
+    </header>
+
+
+
+    <main>
+      <div class="container">
+        {% block main %}{% endblock %}
+      </div>
+    </main>
+
+     <!--Import jQuery before materialize.js-->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script type="text/javascript" src="js/materialize.min.js"></script>
+     <script>
+      $(".button-collapse").sideNav();
+    </script>
+   </body>
+ </html>
