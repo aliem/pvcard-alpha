@@ -48,28 +48,28 @@ class CardsService
     $body_results = array();
 
     if (strlen($term) < 3) {
-      return 'Error: please enter at least 3 characters';
+      return null;
     }
 
     foreach ($this->data['cards'] as $card) {
       $pattern = '/('.$term.')/i';
-      preg_match_all($pattern, $card->title, $matches);
+      preg_match_all($pattern, $card['title'], $matches);
       if (count($matches[0]) > 0) {
-        $title_results[] = $card;
+        $title_results[] = array('slug' => $card['slug'], 'title' => $card['title']);
       } else {
         $pattern = '/(\W+'.$term.')/i';
-        preg_match_all($pattern, $card->markdown, $matches);
+        preg_match_all($pattern, $card['markdown'], $matches);
         if (count($matches[0]) > 0) {
-          $body_results[] = $card;
+          $body_results[] = array('slug' => $card['slug'], 'title' => $card['title']);
         }
       }
     }
 
-    if (count($title_results) == 0 || count($body_results) == 0) {
-      return 'Error: no results found';
+    if (count($title_results) == 0 && count($body_results) == 0) {
+      return 'No results found';
     }
 
-    return array('title_results' => $title_results, 'body_results' => $body_results);
+    return array_merge($title_results, $body_results);
   }
 
 }

@@ -69,7 +69,7 @@
       <a href="#" data-activates="main-nav" id="hamburger" class="button-collapse hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
 
       <ul id="main-nav" class="side-nav fixed">
-        <li><h1>ALIEM Cards</h1></li>
+        <li><h1><a href="/">ALIEM Cards</a></h1></li>
         {% for key,section in data.sections %}
         <li><b><a href="/section/{{ key }}">{{ section.title }}</a></b></li>
         {% endfor %}
@@ -90,6 +90,29 @@
      <script type="text/javascript" src="js/materialize.min.js"></script>
      <script>
       $(".button-collapse").sideNav();
+
+      function ajaxSearch(term) {
+        $.getJSON( "search/"+term, function( data ) {
+          var items = [];
+          $.each( data, function( i, val ) {
+            console.log('index: '+ i +', value: '+val.title);
+            items.push( "<li><a href='card/" + val.slug + " '> " + val.title + "</a></li>" );
+          });
+
+          $("#search-results").html(items.join(""));
+
+          // $( "<ul/>", {
+          // "class": "my-new-list",
+          // html: items.join( "" )
+          // }).appendTo($("#search-results"));
+        });
+      }
+
+      $("#search").on('change keyup', function() {
+        ajaxSearch($(this).val());
+      });
+
+
     </script>
    </body>
  </html>

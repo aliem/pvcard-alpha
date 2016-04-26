@@ -63,7 +63,7 @@ $app->get('/', function() use($app) {
   $data = array(
     'sections' => $sections
   );
-  $app->render('_base.html', array('data' => $data));
+  $app->render('home.html', array('data' => $data));
 
 });
 
@@ -102,6 +102,14 @@ $app->get('/card/:slug', function($slug) use($app) {
   );
 
   $app->render('card.html', array('data' => $data));
+
+});
+
+$app->get('/search/:term', function($term) use($app) {
+
+  $result = $app->cardsService->searchCards($term);
+  header("Content-Type: application/json");
+  echo json_encode($result);
 
 });
 

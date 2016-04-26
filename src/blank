@@ -1,0 +1,29 @@
+public function searchCards($term)
+{
+  $title_results = array();
+  $body_results = array();
+
+  if (strlen($term) < 3) {
+    return null;
+  }
+
+  foreach ($this->data['cards'] as $card) {
+    $pattern = '/('.$term.')/i';
+    preg_match_all($pattern, $card->title, $matches);
+    if (count($matches[0]) > 0) {
+      $title_results[] = array('slug' => $card['slug'], 'title' => $card['title']);
+    } else {
+      $pattern = '/(\W+'.$term.')/i';
+      preg_match_all($pattern, $card->markdown, $matches);
+      if (count($matches[0]) > 0) {
+        $body_results[] = array('slug' => $card['slug'], 'title' => $card['title']);
+      }
+    }
+  }
+
+  if (count($title_results) == 0 && count($body_results) == 0) {
+    return 'No results found';
+  }
+
+  return json_encode(array_merge($title_results, $body_results));
+}
