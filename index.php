@@ -67,17 +67,6 @@ $app->get('/', function() use($app) {
 
 });
 
-$app->get('/section', function() use($app) {
-
-  $sections = $app->cardsService->getSections();
-  $data = array(
-    'sections' => $sections
-  );
-
-  $app->render('section.html', array('data' => $data));
-
-});
-
 $app->get('/section/:slug', function($slug) use($app) {
 
   $sections = $app->cardsService->getSections();
@@ -108,11 +97,9 @@ $app->get('/card/:slug', function($slug) use($app) {
 $app->get('/search/:term', function($term) use($app) {
 
   $result = $app->cardsService->searchCards($term);
-  header("Content-Type: application/json");
   echo json_encode($result);
 
 });
-
 
 // TEST ROUTES
 

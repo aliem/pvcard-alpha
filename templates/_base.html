@@ -94,25 +94,19 @@
       function ajaxSearch(term) {
         $.getJSON( "search/"+term, function( data ) {
           var items = [];
+
           $.each( data, function( i, val ) {
             console.log('index: '+ i +', value: '+val.title);
             items.push( "<li><a href='card/" + val.slug + " '> " + val.title + "</a></li>" );
           });
 
           $("#search-results").html(items.join(""));
-
-          // $( "<ul/>", {
-          // "class": "my-new-list",
-          // html: items.join( "" )
-          // }).appendTo($("#search-results"));
         });
       }
 
       $("#search").on('change keyup', function() {
         ajaxSearch($(this).val());
       });
-
-
     </script>
    </body>
  </html>
